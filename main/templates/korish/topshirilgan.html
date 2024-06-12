@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+  <style>
+      @media only screen and (max-width: 500px) {
+            .afes{
+                overflow:scroll;
+            }
+      }
+  </style>
+  <!-- TO DO List -->
+  <div class="box box-primary">
+    <div class="box-header">
+      <i class="ion ion-clipboard"></i>
+      <h3 class="box-title">Malumotlar</h3>
+      <div class="box-tools pull-right">
+
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body afes">
+      <table class="table">
+        <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">O`quvchi</th>
+              <th scope="col">Kitob</th>
+              <th scope="col">Topshirish sanasi</th>
+              <th scope="col">Oligan sana</th>
+              <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in buys %}
+          <tr>
+              <th scope="row">{{ i.id }}</th>
+              <th>{{ i.sender }}</th>
+              <th>{{ i.Kitob }}</th>
+              <th>{{ i.vaqt }}</th>
+              <th>{{ i.datess }}</th>
+              <th>
+                  {% if i.muddat_otdi %}
+                    Mudda O`tdi
+                  {% elif i.finish %}
+                    Topshirilgan
+                  {% else %}
+                    jarayonda
+                  {% endif %}
+              </th>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div><!-- /.box-body -->
+
+  </div><!-- /.box -->
+{% endblock content %}

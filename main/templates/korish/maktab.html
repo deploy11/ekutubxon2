@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block content %}
+        <section class="content">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3>{{ buys_count }}</h3>
+                  <p>Barhcha Formulaylar</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-file-text"></i>
+                </div>
+                <a href='{% url "formulars" %}' class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3>{{ buys_topshirilmagan_count }}</h3>
+                  <p>Topshirilmagan</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-ban"></i>
+                </div>
+                <a href="{% url 'topshirilmagan' %}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>{{ buys_topshirilgan_count }}</h3>
+                  <p>Topshirilgan</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <a href="{% url 'topshirilgan' %}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>{{ kitoblar_count }}</h3>
+                  <p>Barhca Kitoblar</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'kitob' %}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+
+          </div><!-- /.row -->
+              <!-- TO DO List -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <i class="ion ion-clipboard"></i>
+                  <h3 class="box-title">Bugun Qo`shilgan</h3>
+                  <div class="box-tools pull-right">
+
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body afes">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">O`quvchi</th>
+                        <th scope="col">Kitob</th>
+                        <th scope="col">Topshirish sanasi</th>
+                        <th scope="col">Oligan sana</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in buys %}
+                          <tr>
+                              <th scope="row">{{ i.id }}</th>
+                              <th>{{ i.sender }}</th>
+                              <th>{{ i.Kitob }}</th>
+                              <th>{{ i.vaqt }}</th>
+                              <th>{{ i.datess }}</th>
+                              <th>
+                                  {% if i.muddat_otdi %}
+                                    Mudda O`tdi
+                                  {% elif i.finish %}
+                                    Topshirilgan
+                                  {% else %}
+                                    jarayonda
+                                  {% endif %}
+                              </th>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div><!-- /.box-body -->
+
+              </div><!-- /.box -->
+
+
+
+
+
+
+            </section><!-- right col -->
+          </div><!-- /.row (main row) -->
+
+        </section><!-- /.content -->
+        <script>
+          // <![CDATA[  <-- For SVG support
+          if ('WebSocket' in window) {
+            (function () {
+              function refreshCSS() {
+                var sheets = [].slice.call(document.getElementsByTagName("link"));
+                var head = document.getElementsByTagName("head")[0];
+                for (var i = 0; i < sheets.length; ++i) {
+                  var elem = sheets[i];
+                  var parent = elem.parentElement || head;
+                  parent.removeChild(elem);
+                  var rel = elem.rel;
+                  if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                    var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                    elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                  }
+                  parent.appendChild(elem);
+                }
+              }
+              var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+              var address = protocol + window.location.host + window.location.pathname + '/ws';
+              var socket = new WebSocket(address);
+              socket.onmessage = function (msg) {
+                if (msg.data == 'reload') window.location.reload();
+                else if (msg.data == 'refreshcss') refreshCSS();
+              };
+              if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                console.log('Live reload enabled.');
+                sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+              }
+            })();
+          }
+          else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+          }
+          // ]]>
+        </script>
+{% endblock content %}

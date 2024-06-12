@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Yangi Sinf</h5>
+        </div>
+        <form action="" method="post">
+            {%csrf_token%}
+            <div class="modal-body">
+                {{ form | crispy }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Yangi Sinf</h5>
+      </div>
+      <form action="{% url "sinf_import" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="file" name="sinf"> <!-- Add name attribute -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">Saqlash</button>
+        </div>
+      </form>      
+    </div>
+  </div>
+</div>
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    
+    
+          <style>
+              @media only screen and (max-width: 500px) {
+                  .afes{
+                      overflow:scroll;
+                  }
+              }
+          </style>
+        <!-- TO DO List -->
+        <div class="box box-primary">
+          <div class="box-header">
+            <i class="ion ion-clipboard"></i>
+            <h3 class="box-title">Malumotlar</h3>
+            <div class="box-tools pull-right">
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Yangi
+  </button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+    import
+  </button>
+  <a href='{% url "sinf_export" %}' type="button" class="btn btn-primary">
+    export
+  </a>
+            </div>
+          </div><!-- /.box-header -->
+          <div class="box-body afes">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nomi</th>
+                  <th scope="col">sinf rahbar</th>
+                  <th scope="col">Qo`shilgan sana</th>
+                  <th scope="col">Edit/Detele</th>
+                </tr>
+              </thead>
+              <tbody>
+              
+                    {% for i in sinf %}
+                    <tr>
+                      <th scope="row">{{ i.id }}</th>
+                      <td>{{i.title}}</td>
+                      <td>{{ i.rahbar }}</td>
+                      <td>{{ i.date }}</td>
+                      <td><a href="{% url "edit_sinf" i.pk %}">edit</a>/<a href="{% url "delete_sinf" i.id %}">delete</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">Hali Formulyar Yaratilmagan</th>
+                    </tr>
+                    {% endfor %}
+              </tbody>
+            </table>
+          </div><!-- /.box-body -->
+
+        </div><!-- /.box -->
+{% endblock content %}

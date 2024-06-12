@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <style>
+      @media only screen and (max-width: 500px) {
+            .afes{
+                overflow:scroll;
+            }
+      }
+  </style>
+  <!-- TO DO List -->
+  <div class="box box-primary">
+    <div class="box-header">
+      <i class="ion ion-clipboard"></i>
+      <h3 class="box-title">Malumotlar</h3>
+      <div class="box-tools pull-right">
+
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body afes">
+      <table class="table">
+        <thead>
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nomi</th>
+              <th scope="col">Chiqan Yili</th>
+              <th scope="col">Muallifi</th>
+              <th scope="col">yosh chegarasi</th>
+              <th scope="col">description</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in books %}
+          <tr>
+              <th scope="row">{{ i.id }}</th>
+              <th>{{ i.title }}</th>
+              <th>{{ i.year }}</th>
+              <th>{{ i.author }}</th>
+              <th>{{ i.yosh }}</th>
+              <th>{{ i.description }}</th>
+              {% empty %}
+              <th scope="row">Hali Kitoblar yo`q</th>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div><!-- /.box-body -->
+
+  </div><!-- /.box -->
+{% endblock content %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Yangi Formulyar</h5>
+        </div>
+        <form action="" method="post">
+            {%csrf_token%}
+            <div class="modal-body">
+                {{ form | crispy }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Yangi Formulyar</h5>
+            </div>
+            <form action="{% url "sinf_import" %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <input type="file" name="buy"> <!-- Add name attribute -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+              </div>
+            </form>      
+          </div>
+        </div>
+      </div>
+  
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    
+    
+          <style>
+              @media only screen and (max-width: 500px) {
+                  .afes{
+                      overflow:scroll;
+                  }
+              }
+          </style>
+        <!-- TO DO List -->
+        <div class="box box-primary">
+          <div class="box-header">
+            <i class="ion ion-clipboard"></i>
+            <h3 class="box-title">Malumotlar</h3>
+            <div class="box-tools pull-right">
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Yangi
+  </button>
+            </div>
+          </div><!-- /.box-header -->
+          <div class="box-body afes">
+            <table class="table hover">
+                <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">O`quvchi</th>
+                      <th scope="col">Kitob</th>
+                      <th scope="col">Topshirish sanasi</th>
+                      <th scope="col">Oligan sana</th>
+                      <th scope="col">Status</th>
+                      <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for i in buys %}
+                  <tr>
+                      <th scope="row">{{ i.id }}</th>
+                      <th>{{ i.sender }}</th>
+                      <th>{{ i.Kitob }}</th>
+                      <th>{{ i.vaqt }}</th>
+                      <th>{{ i.datess }}</th>
+                      
+                      <th>
+                          {% if i.muddat_otdi %}
+                            Mudda O`tdi
+                          {% elif i.finish %}
+                            Topshirilgan
+                          {% else %}
+                            jarayonda
+                          {% endif %}
+                      </th>
+                      <td><a style="color: aqua;" href="{% url "edit_buy" i.pk %}">edit</a> / <a style="color: red;" href="{% url "delete_buy" i.id %}">delete</a> / <a style="color:green;" href="{% url "f_F" i.id %}">finish</a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+          </div><!-- /.box-body -->
+
+        </div><!-- /.box -->
+    
+{% endblock content %}
